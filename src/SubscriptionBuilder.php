@@ -71,6 +71,20 @@ class SubscriptionBuilder
     protected $metadata;
 
     /**
+     * The date where the subscription should finish
+     *
+     * @var \DateTime|null
+     */
+    protected $cancelAt = null;
+
+    /**
+     * Specify if the initial payment should be done off-session or on-session
+     *
+     * @var bool
+     */
+    protected $offSession = true;
+
+    /**
      * Create a new subscription builder instance.
      *
      * @param  mixed  $owner
@@ -270,7 +284,8 @@ class SubscriptionBuilder
             'quantity' => $this->quantity,
             'tax_percent' => $this->getTaxPercentageForPayload(),
             'trial_end' => $this->getTrialEndForPayload(),
-            'off_session' => true,
+            'cancel_at' => $this->cancelAt->getTimestamp(),
+            'off_session' => $this->offSession,
         ]);
     }
 
