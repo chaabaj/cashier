@@ -99,6 +99,16 @@ class SubscriptionBuilder
         $this->owner = $owner;
     }
 
+    public function cancelAt($cancelAt) {
+        $this->cancelAt = $cancelAt;
+        return $this;
+    }
+
+    public function onSession() {
+        $this->offSession = false;
+        return $this;
+    }
+
     /**
      * Specify the quantity of the subscription.
      *
@@ -284,7 +294,7 @@ class SubscriptionBuilder
             'quantity' => $this->quantity,
             'tax_percent' => $this->getTaxPercentageForPayload(),
             'trial_end' => $this->getTrialEndForPayload(),
-            'cancel_at' => $this->cancelAt->getTimestamp(),
+            'cancel_at' => is_null($this->cancelAt) ? null : $this->cancelAt->getTimestamp(),
             'off_session' => $this->offSession,
         ]);
     }
