@@ -113,6 +113,7 @@ class SubscriptionBuilder
 
     public function withTaxRates($taxRates) {
         $this->defaultTaxRates = $taxRates;
+        return $this;
     }
 
     /**
