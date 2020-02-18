@@ -84,6 +84,8 @@ class SubscriptionBuilder
      */
     protected $offSession = true;
 
+    protected $defaultTaxRates = null;
+
     /**
      * Create a new subscription builder instance.
      *
@@ -107,6 +109,10 @@ class SubscriptionBuilder
     public function onSession() {
         $this->offSession = false;
         return $this;
+    }
+
+    public function withTaxRates($taxRates) {
+        $this->defaultTaxRates = $taxRates;
     }
 
     /**
@@ -295,6 +301,7 @@ class SubscriptionBuilder
             'tax_percent' => $this->getTaxPercentageForPayload(),
             'trial_end' => $this->getTrialEndForPayload(),
             'cancel_at' => is_null($this->cancelAt) ? null : $this->cancelAt->getTimestamp(),
+            "default_tax_rates" => $this->defaultTaxRates,
             'off_session' => $this->offSession,
         ]);
     }
